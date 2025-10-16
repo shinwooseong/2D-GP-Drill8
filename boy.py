@@ -4,7 +4,8 @@ from sdl2 import SDL_KEYDOWN, SDLK_SPACE, SDLK_RIGHT, SDL_KEYUP, SDLK_LEFT, SDLK
 from state_machine import StateMachine
 
 # 이벤트 체크 함수
-
+# space - sleep -> idle
+# a - autorun -> idle
 def space_down(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_SPACE
 
