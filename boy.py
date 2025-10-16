@@ -114,7 +114,7 @@ class AutoRun:
         self.boy.dir = self.boy.face_dir
         self.boy.face_dir = self.boy.dir
 
-        # 벽 닿기 직전 방향 바꾸기 ? 
+        # 벽 닿기 직전 방향 바꾸기
         if self.boy.x < 25:
             self.boy.x = 25
             self.boy.dir *= -1
@@ -133,6 +133,16 @@ class AutoRun:
         self.boy.x += self.boy.dir * 5
         if get_time() - self.boy.autorun_start_time > 5:
             self.boy.state_machine.handle_state_event(('TIME_OUT', None))
+
+        #  실행 중에도 확인하기
+        if self.boy.x < 25:
+            self.boy.x = 25
+            self.boy.dir *= -1
+            self.boy.face_dir = self.boy.dir
+        elif self.boy.x > 775:
+            self.boy.x = 775
+            self.boy.dir *= -1
+            self.boy.face_dir = self.boy.dir
 
 
     def draw(self):
