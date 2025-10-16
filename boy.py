@@ -114,6 +114,17 @@ class AutoRun:
         self.boy.dir = self.boy.face_dir
         self.boy.face_dir = self.boy.dir
 
+        # 벽 닿기 직전 방향 바꾸기
+        if self.boy.x < 25:
+            self.boy.x = 25
+            self.boy.dir *= -1
+            self.boy.face_dir = self.boy.dir
+        elif self.boy.x > 775:
+            self.boy.x = 775
+            self.boy.dir *= -1
+            self.boy.face_dir = self.boy.dir
+
+
     def exit(self,e):
         pass
 
