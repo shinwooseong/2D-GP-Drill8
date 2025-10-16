@@ -94,6 +94,7 @@ class Run:
         self.boy.x += self.boy.dir * 5
 
 
+
     def draw(self):
         if self.boy.face_dir == 1: # right
             self.boy.image.clip_draw(self.boy.frame * 100, 100, 100, 100, self.boy.x, self.boy.y)
@@ -118,6 +119,8 @@ class AutoRun:
     def do(self):
         self.boy.frame = (self.boy.frame + 1) % 8
         self.boy.x += self.boy.dir * 5
+        if get_time() - self.boy.autorun_start_time > 5:
+            self.boy.state_machine.handle_state_event(('TIME_OUT', None))
 
 
     def draw(self):
@@ -138,11 +141,13 @@ class Boy:
         self.IDLE = Idle(self)
         self.SLEEP = Sleep(self)
         self.RUN = Run(self)
+        self.AUTORUN = AutoRun(self)
         self.state_machine = StateMachine(
             self.IDLE, # 시작 상태
             {
                 self.SLEEP: {space_down: self.IDLE},
                 self.IDLE: {time_out: self.SLEEP, right_down: self.RUN, left_down: self.RUN, right_up: self.RUN, left_up: self.RUN, a_down: self.AUTORUN},
+                self.AUTORUN: {right_down: self.RUN, left_down: self.RUN, time_out : self.IDLE},
                 self.RUN: {right_up: self.IDLE, left_up: self.IDLE, left_down: self.IDLE, right_down: self.IDLE}
             }
         )
